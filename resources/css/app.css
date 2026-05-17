@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+@import '@fontsource/syne/400.css';
+@import '@fontsource/syne/700.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
 
 @plugin 'tailwindcss-animate';
 
@@ -7,8 +12,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Syne', ui-sans-serif, system-ui, sans-serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -16,38 +21,23 @@
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
-
     --color-popover: var(--popover);
     --color-popover-foreground: var(--popover-foreground);
-
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
-
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
-
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
-
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
-
     --color-destructive: var(--destructive);
     --color-destructive-foreground: var(--destructive-foreground);
-
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
-
-    --color-chart-1: var(--chart-1);
-    --color-chart-2: var(--chart-2);
-    --color-chart-3: var(--chart-3);
-    --color-chart-4: var(--chart-4);
-    --color-chart-5: var(--chart-5);
-
     --color-sidebar: var(--sidebar-background);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -58,14 +48,6 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
     *,
     ::after,
@@ -76,75 +58,74 @@
     }
 }
 
+/* ── LIGHT MODE ── */
 :root {
-    --background: hsl(0, 0%, 100%);
-    --foreground: hsl(0, 0%, 3.9%);
-    --card: hsl(0, 0%, 100%);
-    --card-foreground: hsl(0, 0%, 3.9%);
-    --popover: hsl(0, 0%, 100%);
-    --popover-foreground: hsl(0, 0%, 3.9%);
-    --primary: hsl(0, 0%, 9%);
-    --primary-foreground: hsl(0, 0%, 98%);
-    --secondary: hsl(0, 0%, 96.1%);
-    --secondary-foreground: hsl(0, 0%, 9%);
-    --muted: hsl(0, 0%, 96.1%);
-    --muted-foreground: hsl(0, 0%, 45.1%);
-    --accent: hsl(0, 0%, 96.1%);
-    --accent-foreground: hsl(0, 0%, 9%);
-    --destructive: hsl(0, 84.2%, 60.2%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-    --border: hsl(0, 0%, 92.8%);
-    --input: hsl(0, 0%, 89.8%);
-    --ring: hsl(0, 0%, 3.9%);
-    --chart-1: hsl(12, 76%, 61%);
-    --chart-2: hsl(173, 58%, 39%);
-    --chart-3: hsl(197, 37%, 24%);
-    --chart-4: hsl(43, 74%, 66%);
-    --chart-5: hsl(27, 87%, 67%);
-    --radius: 0.5rem;
-    --sidebar-background: hsl(0, 0%, 98%);
-    --sidebar-foreground: hsl(240, 5.3%, 30%);
-    --sidebar-primary: hsl(0, 0%, 10%);
-    --sidebar-primary-foreground: hsl(0, 0%, 98%);
-    --sidebar-accent: hsl(0, 0%, 94%);
-    --sidebar-accent-foreground: hsl(0, 0%, 30%);
-    --sidebar-border: hsl(0, 0%, 91%);
-    --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
+    --background: #FFFFFF;
+    --foreground: #000000;
+    --card: #F5F7FA;
+    --card-foreground: #000000;
+    --popover: #FFFFFF;
+    --popover-foreground: #000000;
+    --primary: #00B981;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F5F7FA;
+    --secondary-foreground: #000000;
+    --muted: #F5F7FA;
+    --muted-foreground: #6B7280;
+    --accent: #00D4FF;
+    --accent-foreground: #000000;
+    --destructive: #FF0000;
+    --destructive-foreground: #FFFFFF;
+    --warning: #FF9900;
+    --warning-foreground: #FFFFFF;
+    --border: #E5E7EB;
+    --input: #FFFFFF;
+    --input-border: #D1D5DB;
+    --ring: #00B981;
+    --radius: 0.75rem;
+    --sidebar-background: #F5F7FA;
+    --sidebar-foreground: #000000;
+    --sidebar-primary: #00B981;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: rgba(0, 212, 255, 0.15);
+    --sidebar-accent-foreground: #000000;
+    --sidebar-border: #E5E7EB;
+    --sidebar-ring: #00D4FF;
 }
 
+/* ── DARK MODE ── */
 .dark {
-    --background: hsl(0, 0%, 3.9%);
-    --foreground: hsl(0, 0%, 98%);
-    --card: hsl(0, 0%, 3.9%);
-    --card-foreground: hsl(0, 0%, 98%);
-    --popover: hsl(0, 0%, 3.9%);
-    --popover-foreground: hsl(0, 0%, 98%);
-    --primary: hsl(0, 0%, 98%);
-    --primary-foreground: hsl(0, 0%, 9%);
-    --secondary: hsl(0, 0%, 14.9%);
-    --secondary-foreground: hsl(0, 0%, 98%);
-    --muted: hsl(0, 0%, 6.9%);
-    --muted-foreground: hsl(0, 0%, 63.9%);
-    --accent: hsl(0, 0%, 14.9%);
-    --accent-foreground: hsl(0, 0%, 98%);
-    --destructive: hsl(0, 84%, 60%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-    --border: hsl(0, 0%, 14.9%);
-    --input: hsl(0, 0%, 14.9%);
-    --ring: hsl(0, 0%, 83.1%);
-    --chart-1: hsl(220, 70%, 50%);
-    --chart-2: hsl(160, 60%, 45%);
-    --chart-3: hsl(30, 80%, 55%);
-    --chart-4: hsl(280, 65%, 60%);
-    --chart-5: hsl(340, 75%, 55%);
-    --sidebar-background: hsl(0, 0%, 7%);
-    --sidebar-foreground: hsl(0, 0%, 80%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0, 0%, 100%);
-    --sidebar-accent: hsl(0, 0%, 15.9%);
-    --sidebar-accent-foreground: hsl(240, 4.8%, 95.9%);
-    --sidebar-border: hsl(0, 0%, 15.9%);
-    --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
+    --background: #000000;
+    --foreground: #FFFFFF;
+    --card: #111318;
+    --card-foreground: #FFFFFF;
+    --popover: #111318;
+    --popover-foreground: #FFFFFF;
+    --primary: #00B981;
+    --primary-foreground: #FFFFFF;
+    --secondary: #111318;
+    --secondary-foreground: #FFFFFF;
+    --muted: #111318;
+    --muted-foreground: #4E5568;
+    --accent: #00D4FF;
+    --accent-foreground: #FFFFFF;
+    --destructive: #FF0000;
+    --destructive-foreground: #FFFFFF;
+    --warning: #FF9900;
+    --warning-foreground: #FFFFFF;
+    --border: #1F2330;
+    --input: #0A0C10;
+    --input-border: #1F2330;
+    --ring: #00B981;
+    --radius: 0.75rem;
+    --sidebar-background: #111318;
+    --sidebar-foreground: #FFFFFF;
+    --sidebar-primary: #00B981;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: rgba(255, 255, 255, 0.08);
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: #1F2330;
+    --sidebar-ring: #00D4FF;
 }
 
 @layer base {
@@ -154,5 +135,36 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Syne', ui-sans-serif, system-ui, sans-serif;
+        font-weight: 700;
     }
 }
+
+.result-content h1,
+.result-content h2,
+.result-content h3,
+.result-content h4 {
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-content h1 { font-size: 1.4rem; }
+.result-content h2 { font-size: 1.2rem; }
+.result-content h3 { font-size: 1.05rem; }
+.result-content h4 { font-size: 1rem; }
+
+.result-content p { margin-bottom: 0.75rem; line-height: 1.75; }
+
+.result-content ul,
+.result-content ol { margin: 0.5rem 0 1rem 1.5rem; }
+
+.result-content li { margin-bottom: 0.25rem; }
+
+.result-content strong { font-weight: 600; }

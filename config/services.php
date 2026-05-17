@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'n8n' => [
+        'base_url' => env('N8N_BASE_URL', ''),
+    ],
+
+    'stripe' => [
+        'key'               => env('STRIPE_KEY'),
+        'secret'            => env('STRIPE_SECRET'),
+        'webhook_secret'    => env('STRIPE_WEBHOOK_SECRET'),
+        'basic_price_id'    => env('STRIPE_BASIC_PRICE_ID'),
+        'unlimited_price_id'=> env('STRIPE_UNLIMITED_PRICE_ID'),
+    ],
+
 ];

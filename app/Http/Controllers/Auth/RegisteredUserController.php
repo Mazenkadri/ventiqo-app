@@ -42,6 +42,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->subscription()->create([
+            'status' => 'trial',
+            'start_date' => now()->toDateString(),
+            'end_date' => now()->addDays(30)->toDateString(),
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);

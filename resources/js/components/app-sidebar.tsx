@@ -3,32 +3,71 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { Building2, CreditCard, FileText, FolderKanban, HeadphonesIcon, LayoutGrid, Package } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        url: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        url: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        url: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
-];
-
 export function AppSidebar() {
+    const { t } = useTranslation();
+    const { auth } = usePage().props as any;
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: t('nav.dashboard'),
+            url: '/dashboard',
+            icon: LayoutGrid,
+        },
+        {
+            title: t('nav.companies'),
+            url: '/companies',
+            icon: Building2,
+        },
+        {
+            title: t('nav.products'),
+            url: '/products',
+            icon: Package,
+        },
+        {
+            title: t('nav.projects'),
+            url: '/projects',
+            icon: FolderKanban,
+        },
+        {
+            title: t('nav.support'),
+            url: '/support',
+            icon: HeadphonesIcon,
+        },
+        {
+            title: t('nav.subscription'),
+            url: '/subscription',
+            icon: CreditCard,
+        },
+    ];
+
+    const adminNavItems: NavItem[] = [
+        {
+            title: t('nav.admin_dashboard'),
+            url: '/admin/dashboard',
+            icon: LayoutGrid,
+        },
+        {
+            title: t('nav.admin_users'),
+            url: '/admin/users',
+            icon: Building2,
+        },
+        {
+            title: t('nav.admin_support'),
+            url: '/admin/support',
+            icon: HeadphonesIcon,
+        },
+        {
+            title: t('nav.admin_plans'),
+            url: '/admin/business-plans',
+            icon: FileText,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -44,11 +83,15 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                {auth?.user?.role !== 'admin' && (
+                    <NavMain items={mainNavItems} label={t('nav.platform')} />
+                )}
+                {auth?.user?.role === 'admin' && (
+                    <NavMain items={adminNavItems} label={t('nav.admin')} />
+                )}
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

@@ -1,29 +1,18 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, LockKeyhole } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
-
-interface ResetPasswordProps {
+interface Props {
     token: string;
     email: string;
 }
+import { useTranslation } from 'react-i18next';
 
-interface ResetPasswordForm {
-    token: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
-}
-
-export default function ResetPassword({ token, email }: ResetPasswordProps) {
-    const { data, setData, post, processing, errors, reset } = useForm<ResetPasswordForm>({
-        token: token,
-        email: email,
+export default function ResetPassword({ token, email }: Props) {
+    const { t } = useTranslation();
+    const { data, setData, post, processing, errors, reset } = useForm({
+        token,
+        email,
         password: '',
         password_confirmation: '',
     });
@@ -36,63 +25,75 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
     };
 
     return (
-        <AuthLayout title="Reset password" description="Please enter your new password below">
-            <Head title="Reset password" />
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+            <Head title={t('auth.reset_password.title_1') + ' ' + t('auth.reset_password.title_2')} />
 
-            <form onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            name="email"
-                            autoComplete="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            readOnly
-                            onChange={(e) => setData('email', e.target.value)}
-                        />
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
+            <div className="w-full max-w-md bg-card border border-border rounded-2xl p-8 flex flex-col items-center gap-6">
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            type="password"
-                            name="password"
-                            autoComplete="new-password"
-                            value={data.password}
-                            className="mt-1 block w-full"
-                            autoFocus
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
-                    </div>
-
-                    <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
-                        <Input
-                            id="password_confirmation"
-                            type="password"
-                            name="password_confirmation"
-                            autoComplete="new-password"
-                            value={data.password_confirmation}
-                            className="mt-1 block w-full"
-                            onChange={(e) => setData('password_confirmation', e.target.value)}
-                            placeholder="Confirm password"
-                        />
-                        <InputError message={errors.password_confirmation} className="mt-2" />
-                    </div>
-
-                    <Button type="submit" className="mt-4 w-full" disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Reset password
-                    </Button>
+                {/* Icon */}
+                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center">
+                    <LockKeyhole className="w-8 h-8 text-accent" />
                 </div>
-            </form>
-        </AuthLayout>
+
+                {/* Title */}
+                <div className="text-center flex flex-col gap-2">
+                    <h1 className="text-2xl font-bold font-heading">
+                        {t('auth.reset_password.title_1')} <span className="text-accent">{t('auth.reset_password.title_2')}</span>
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {t('auth.reset_password.prompt_new')}
+                    </p>
+                </div>
+
+                {/* Form */}
+                <form onSubmit={submit} className="w-full flex flex-col gap-4">
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium">{t('auth.reset_password.email_address')}</label>
+                        <input
+                            type="email"
+                            value={data.email}
+                            readOnly
+                            className="bg-input border border-[var(--input-border)] rounded-xl px-3 py-2 text-sm outline-none opacity-60 cursor-not-allowed"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium">{t('auth.reset_password.new_password')}</label>
+                        <input
+                            type="password"
+                            value={data.password}
+                            onChange={e => setData('password', e.target.value)}
+                            placeholder="Min 8 characters"
+                            autoFocus
+                            className="bg-input border border-[var(--input-border)] rounded-xl px-3 py-2 text-sm outline-none focus:border-accent transition-colors"
+                        />
+                        {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium">{t('auth.reset_password.confirm_password')}</label>
+                        <input
+                            type="password"
+                            value={data.password_confirmation}
+                            onChange={e => setData('password_confirmation', e.target.value)}
+                            placeholder="Repeat password"
+                            className="bg-input border border-[var(--input-border)] rounded-xl px-3 py-2 text-sm outline-none focus:border-accent transition-colors"
+                        />
+                        {errors.password_confirmation && <p className="text-xs text-destructive">{errors.password_confirmation}</p>}
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50 transition-opacity"
+                        style={{ backgroundColor: 'var(--accent)', color: '#000' }}
+                    >
+                        {processing && <LoaderCircle className="w-4 h-4 animate-spin" />}
+                        {t('auth.reset_password.reset_button')}
+                    </button>
+                </form>
+
+            </div>
+        </div>
     );
 }

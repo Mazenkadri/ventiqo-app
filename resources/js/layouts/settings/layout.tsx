@@ -4,31 +4,33 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        url: '/settings/profile',
-        icon: null,
-    },
-    {
-        title: 'Password',
-        url: '/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        url: '/settings/appearance',
-        icon: null,
-    },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+    const { t } = useTranslation();
+
+    const sidebarNavItems: NavItem[] = [
+        {
+            title: t('settings.nav.profile'),
+            url: '/settings/profile',
+            icon: null,
+        },
+        {
+            title: t('settings.nav.password'),
+            url: '/settings/password',
+            icon: null,
+        },
+        {
+            title: t('settings.nav.appearance'),
+            url: '/settings/appearance',
+            icon: null,
+        },
+    ];
     const currentPath = window.location.pathname;
 
     return (
         <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+            <Heading title={t('settings.title')} description={t('settings.description')} />
 
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">
