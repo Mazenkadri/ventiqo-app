@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ['...']
+
+[start]
+cmd = 'php artisan config:cache && php artisan migrate --force && (php-fpm -y /assets/php-fpm.conf &) && nginx -c /assets/nginx.conf -g "daemon off;"'
