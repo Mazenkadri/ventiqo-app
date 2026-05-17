@@ -145,10 +145,8 @@ class StripeController extends Controller
         $planName = $planType === 'basic' ? 'Basic' : 'Unlimited';
         $price    = $planType === 'basic' ? '$19.99' : '$49.99';
 
-        Http::withoutVerifying()
-            ->withHeaders([
-                'ngrok-skip-browser-warning' => 'true',
-                'Content-Type'               => 'application/json',
+        Http::withHeaders([
+                'Content-Type' => 'application/json',
             ])
             ->post(config('services.n8n.base_url') . '/webhook/send-email', [
                 'to'        => $user->email,

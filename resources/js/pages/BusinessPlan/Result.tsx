@@ -231,7 +231,6 @@ function TemplateSelector({ selectedTemplate, setSelectedTemplate, allowedTempla
 }
 
 export default function BusinessPlanResult({ business_plan, project, sections, bmc, plan_type = 'free', can_export_bmc = false, allowed_templates = [1] }: Props) {
-    console.log('plan props:', { plan_type, can_export_bmc, allowed_templates });
     const { t } = useTranslation();
     const [editingSection, setEditingSection] = useState<string | null>(null);
     const [editText, setEditText] = useState('');

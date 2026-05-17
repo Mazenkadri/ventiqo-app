@@ -22,10 +22,8 @@ class VerificationCodeController extends Controller
             ? 'Verify your Ventiqo account'
             : 'Reset your Ventiqo password';
 
-        Http::withoutVerifying()
-            ->withHeaders([
-                'ngrok-skip-browser-warning' => 'true',
-                'Content-Type'               => 'application/json',
+        Http::withHeaders([
+                'Content-Type' => 'application/json',
             ])
             ->post(config('services.n8n.base_url') . '/webhook/send-email', [
                 'to'      => $user->email,

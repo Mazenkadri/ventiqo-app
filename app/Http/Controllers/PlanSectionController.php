@@ -112,9 +112,7 @@ class PlanSectionController extends Controller
 
         try {
             $response = Http::timeout(300)
-                ->withoutVerifying()
                 ->withHeaders([
-                    'ngrok-skip-browser-warning' => 'true',
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                 ])
@@ -126,11 +124,7 @@ class PlanSectionController extends Controller
                     'input_json'       => $request->input_json,
                     'plan_context'     => $planContext,
                 ]);
-                Log::info('n8n raw response', [
-                    'status_code' => $response->status(),
-                    'body'        => $response->body(),
-                    'json'        => $response->json(),
-                ]);
+
 
             $responseData = $response->json();
             $status = is_array($responseData) && isset($responseData[0])
@@ -138,7 +132,7 @@ class PlanSectionController extends Controller
                 : ($responseData['status'] ?? null);
 
             if ($response->successful() && $response->json('status') === 'completed') {
-                Log::info('entering completed block');
+
                 $planSection->update([
                     'validation_status' => 'completed',
                 ]);
@@ -160,7 +154,7 @@ class PlanSectionController extends Controller
                     try {
                         app(BmcExtractorService::class)->extract($businessPlan);
                     } catch (\Exception $e) {
-                        Log::info('BMC extraction failed', ['error' => $e->getMessage()]);
+                        Log::error('BMC extraction failed', ['error' => $e->getMessage()]);
                     }
                 }
 
@@ -170,7 +164,7 @@ class PlanSectionController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            Log::info('catch block hit', ['error' => $e->getMessage()]);
+            Log::error('n8n webhook failed', ['section' => $sectionName, 'error' => $e->getMessage()]);
             $planSection->update([
                 'validation_status' => 'failed',
             ]);
