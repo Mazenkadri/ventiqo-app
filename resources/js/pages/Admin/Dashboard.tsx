@@ -5,7 +5,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Users, FileText, HeadphonesIcon, AlertTriangle, CreditCard, Zap } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-    Legend, LineChart, Line, PieChart, Pie, Cell,
+    LineChart, Line, PieChart, Pie, Cell,
     ResponsiveContainer
 } from 'recharts';
 
@@ -53,7 +53,7 @@ export default function AdminDashboard({ stats, charts }: Props) {
         { title: t('nav.admin_dashboard'), href: '/admin/dashboard' },
     ];
 
-    const statCards: { title: string; value: string | number; icon: any; href: string; color: string }[] = [
+    const statCards: { title: string; value: string | number; icon: React.ElementType; href: string; color: string }[] = [
         { title: t('admin.dashboard.stat_cards.total_users'), value: stats.total_users, icon: Users, href: '/admin/users', color: 'text-accent' },
         { title: t('admin.dashboard.stat_cards.active_subscriptions'), value: stats.active_subscriptions, icon: CreditCard, href: '/admin/users', color: 'text-accent' },
         { title: t('admin.dashboard.stat_cards.total_business_plans'), value: stats.total_plans, icon: FileText, href: '/admin/business-plans', color: 'text-accent' },

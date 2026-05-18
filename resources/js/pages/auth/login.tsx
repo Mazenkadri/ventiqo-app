@@ -1,5 +1,5 @@
-import { Head, router } from '@inertiajs/react';
-import { useState, useEffect, FormEventHandler } from 'react';
+import { Head } from '@inertiajs/react';
+import { useState, FormEventHandler } from 'react';
 import { LoaderCircle, Sun, Moon } from 'lucide-react';
 import VerificationModal from '@/components/verification-modal';
 import { useForm } from '@inertiajs/react';
@@ -28,7 +28,7 @@ export default function Login({ status, canResetPassword }: Props) {
         remember: false as boolean,
     });
 
-    const { data: registerData, setData: setRegisterData, post: registerPost, processing: registerProcessing, errors: registerErrors, reset: registerReset } = useForm({
+    const { data: registerData, setData: setRegisterData, post: registerPost, errors: registerErrors, reset: registerReset } = useForm({
         name: '',
         email: '',
         password: '',

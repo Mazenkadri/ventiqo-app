@@ -97,7 +97,7 @@ export default function VerificationModal({ type, email, onClose, onSuccess }: P
             setStep('verify');
             setTimer(60);
             setSuccess(t('verification.succ_code_sent'));
-        } catch (e) {
+        } catch {
             setError(t('verification.err_send_failed_retry'));
         } finally {
             setSending(false);
@@ -127,7 +127,7 @@ export default function VerificationModal({ type, email, onClose, onSuccess }: P
                 if (res.ok && data.verified) {
                     setSuccess(t('verification.succ_verified'));
                     setTimeout(() => {
-                        onSuccess ? onSuccess() : router.visit(route('dashboard'));
+                        if (onSuccess) { onSuccess(); } else { router.visit(route('dashboard')); }
                     }, 1000);
                 } else {
                     setError(data.message || t('verification.err_invalid_code'));
@@ -160,7 +160,7 @@ export default function VerificationModal({ type, email, onClose, onSuccess }: P
                     setError(data.message || t('verification.err_invalid_code'));
                 }
             }
-        } catch (e) {
+        } catch {
             setError(t('verification.err_wrong'));
         } finally {
             setVerifying(false);

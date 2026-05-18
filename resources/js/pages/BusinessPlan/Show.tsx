@@ -10,7 +10,7 @@ import { Check, X, Loader2, Lock, ChevronRight } from 'lucide-react';
 interface Section {
     id: number;
     section_name: string;
-    input_json: any;
+    input_json: Record<string, string>;
     generated_text: string | null;
     validation_status: string;
     edited: boolean;

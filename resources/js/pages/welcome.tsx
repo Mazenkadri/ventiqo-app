@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
     FileText, Zap, Globe, BarChart3, Edit3, Download,
     ArrowRight, Check, ChevronDown, Sun, Moon, Menu, X,
-    Building2, Brain, Layers, Crown, Infinity
+    Building2, Brain, Layers, Crown, Infinity as InfinityIcon
 } from 'lucide-react';
 import { useAppearance } from '@/hooks/use-appearance';
 
@@ -161,7 +161,7 @@ export default function Welcome() {
             name: t('subscription.plans_data.unlimited.name'),
             price: '$49.99',
             period: t('subscription.plans_data.unlimited.period'),
-            icon: Infinity,
+            icon: InfinityIcon,
             color: 'text-primary',
             features: [
                 { label: t('subscription.plans_data.unlimited.feat_1'), included: true },

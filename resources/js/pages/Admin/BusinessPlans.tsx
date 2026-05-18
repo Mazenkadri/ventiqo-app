@@ -11,7 +11,19 @@ interface PlanSection {
     section_name: string;
     validation_status: string;
     generated_text: string | null;
-    chart_data?: any;
+    chart_data?: ChartData;
+}
+
+interface ChartData {
+    revenue: number[];
+    costs: number[];
+    profit: number[];
+    cost_breakdown_y1: Record<string, number>;
+    cost_breakdown_y2: Record<string, number>;
+    cost_breakdown_y3: Record<string, number>;
+    breakeven_month: number;
+    arpu: number;
+    monthly_growth_rate: number;
 }
 
 interface Company {
@@ -65,8 +77,8 @@ const LABELS: Record<string, string> = {
 const stripFirstHeading = (text: string): string => text.replace(/^#+\s+.+\n?/m, '').trim();
 
 function FinancialCharts({ revenueData, costBreakdownData, breakeven, arpu, growthRate }: {
-    revenueData: any[];
-    costBreakdownData: any[];
+    revenueData: Record<string, string | number>[];
+    costBreakdownData: Record<string, string | number>[];
     breakeven: number;
     arpu: number;
     growthRate: number;

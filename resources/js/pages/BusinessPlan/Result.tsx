@@ -16,7 +16,19 @@ interface Section {
     generated_text: string | null;
     validation_status: string;
     edited: boolean | number;
-    chart_data?: any;
+    chart_data?: ChartData;
+}
+
+interface ChartData {
+    revenue: number[];
+    costs: number[];
+    profit: number[];
+    cost_breakdown_y1: Record<string, number>;
+    cost_breakdown_y2: Record<string, number>;
+    cost_breakdown_y3: Record<string, number>;
+    breakeven_month: number;
+    arpu: number;
+    monthly_growth_rate: number;
 }
 
 interface BusinessPlan {
@@ -108,8 +120,8 @@ const stripFirstHeading = (text: string): string =>
     text.replace(/^#+\s+.+\n?/m, '').trim();
 
 function FinancialCharts({ revenueData, costBreakdownData, breakeven, arpu, growthRate }: {
-    revenueData: any[];
-    costBreakdownData: any[];
+    revenueData: Record<string, string | number>[];
+    costBreakdownData: Record<string, string | number>[];
     breakeven: number;
     arpu: number;
     growthRate: number;
@@ -230,7 +242,7 @@ function TemplateSelector({ selectedTemplate, setSelectedTemplate, allowedTempla
     );
 }
 
-export default function BusinessPlanResult({ business_plan, project, sections, bmc, plan_type = 'free', can_export_bmc = false, allowed_templates = [1] }: Props) {
+export default function BusinessPlanResult({ business_plan, project, sections, bmc, can_export_bmc = false, allowed_templates = [1] }: Props) {
     const { t } = useTranslation();
     const [editingSection, setEditingSection] = useState<string | null>(null);
     const [editText, setEditText] = useState('');

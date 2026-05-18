@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import { Check, X, Zap, Crown, Infinity } from 'lucide-react';
+import { Check, X, Zap, Crown, Infinity as InfinityIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -24,7 +24,6 @@ interface Props {
 export default function SubscriptionIndex({
     subscription,
     plan_type,
-    can_export_bmc,
     weekly_limit,
     weekly_count,
 }: Props) {
@@ -114,7 +113,7 @@ export default function SubscriptionIndex({
             name: t('subscription.plans_data.unlimited.name'),
             price: '$49.99',
             period: t('subscription.plans_data.unlimited.period'),
-            icon: Infinity,
+            icon: InfinityIcon,
             color: 'text-primary',
             features: [
                 { label: t('subscription.plans_data.unlimited.feat_1'), included: true },

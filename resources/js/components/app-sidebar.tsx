@@ -1,4 +1,4 @@
-import { NavFooter } from '@/components/nav-footer';
+
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
@@ -10,7 +10,7 @@ import AppLogo from './app-logo';
 
 export function AppSidebar() {
     const { t } = useTranslation();
-    const { auth } = usePage().props as any;
+    const { auth } = usePage<{ auth: { user: { role: string } } }>().props;
 
     const mainNavItems: NavItem[] = [
         {
