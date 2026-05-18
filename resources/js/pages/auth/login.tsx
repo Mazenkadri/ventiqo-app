@@ -134,20 +134,36 @@ export default function Login({ status, canResetPassword }: Props) {
             <Head title={mode === 'login' ? 'Sign In' : 'Sign Up'} />
 
             {/* Main container */}
-            <div className="relative w-full max-w-4xl h-[560px] flex rounded-3xl overflow-hidden shadow-2xl bg-card border border-border">
+            <div className="relative w-full max-w-md md:max-w-4xl h-auto md:h-[560px] flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl bg-card border border-border">
 
                 {/* ─── LOGIN FORM (left side) ─── */}
                 <div
-                    className="relative w-1/2 flex-shrink-0 flex flex-col justify-center px-12 py-10 z-10"
+                    className={`relative w-full md:w-1/2 flex-shrink-0 flex flex-col justify-center px-6 py-8 md:px-12 md:py-10 z-10 ${mode === 'login' ? 'block' : 'hidden md:block'}`}
                     style={{
                         opacity: mode === 'login' ? 1 : 0,
                         transition: 'opacity 0.3s ease',
                         pointerEvents: mode === 'login' ? 'auto' : 'none',
                     }}
                 >
-                    <h1 className="text-4xl font-bold text-foreground mb-1 font-heading">{t('auth.login.welcome')}</h1>
-                    <h1 className="text-4xl font-bold text-accent mb-2 font-heading">{t('auth.login.back')}</h1>
-                    <p className="text-muted-foreground text-sm mb-8">{t('auth.login.sign_in_prompt')}</p>
+                    {/* Mobile Header (visible only on mobile) */}
+                    <div className="flex md:hidden items-center justify-between w-full mb-6">
+                        <div className="h-8">
+                            <img src="/Ventiqo-lightmode.svg" alt="Ventiqo" className="h-full w-auto block dark:hidden" />
+                            <img src="/Ventiqo-darkmode.svg" alt="Ventiqo" className="h-full w-auto hidden dark:block" />
+                        </div>
+                        <button
+                            onClick={toggleTheme}
+                            type="button"
+                            className="flex items-center justify-center bg-input rounded-full p-2.5 border border-border transition-colors hover:border-accent"
+                        >
+                            <Sun className="w-4 h-4 block dark:hidden text-accent" />
+                            <Moon className="w-4 h-4 hidden dark:block text-accent" />
+                        </button>
+                    </div>
+
+                    <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-1 font-heading">{t('auth.login.welcome')}</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-accent mb-2 font-heading">{t('auth.login.back')}</h1>
+                    <p className="text-muted-foreground text-sm mb-6 md:mb-8">{t('auth.login.sign_in_prompt')}</p>
 
                     {status && (
                         <div className="mb-4 px-4 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm text-center">
@@ -160,6 +176,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <label className={labelClass}>{t('auth.login.email_address')}</label>
                             <input
                                 type="email"
+                                autoComplete="email"
                                 value={loginData.email}
                                 onChange={e => setLoginData(p => ({ ...p, email: e.target.value }))}
                                 placeholder="you@company.com"
@@ -226,7 +243,7 @@ export default function Login({ status, canResetPassword }: Props) {
 
                 {/* ─── SLIDING BRAND PANEL ─── */}
                 <div
-                    className="absolute top-0 w-1/2 h-full flex flex-col items-center justify-center px-10 py-10 rounded-3xl z-20 bg-card border border-border"
+                    className="absolute top-0 w-1/2 h-full hidden md:flex flex-col items-center justify-center px-10 py-10 rounded-3xl z-20 bg-card border border-border"
                     style={{
                         right: mode === 'login' ? '0%' : '50%',
                         transition: 'right 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -240,14 +257,30 @@ export default function Login({ status, canResetPassword }: Props) {
 
                 {/* ─── REGISTER FORM (right side, revealed when panel slides left) ─── */}
                 <div
-                    className="absolute right-0 top-0 w-1/2 h-full flex flex-col justify-center px-12 py-10"
+                    className={`relative md:absolute md:right-0 md:top-0 w-full md:w-1/2 h-auto md:h-full flex flex-col justify-center px-6 py-8 md:px-12 md:py-10 ${mode === 'register' ? 'block' : 'hidden md:block'}`}
                     style={{
                         opacity: mode === 'register' ? 1 : 0,
                         transition: 'opacity 0.3s ease 0.2s',
                         pointerEvents: mode === 'register' ? 'auto' : 'none',
                     }}
                 >
-                    <h1 className="text-4xl font-bold text-accent mb-2 font-heading">{t('auth.signup.welcome')}</h1>
+                    {/* Mobile Header (visible only on mobile) */}
+                    <div className="flex md:hidden items-center justify-between w-full mb-6">
+                        <div className="h-8">
+                            <img src="/Ventiqo-lightmode.svg" alt="Ventiqo" className="h-full w-auto block dark:hidden" />
+                            <img src="/Ventiqo-darkmode.svg" alt="Ventiqo" className="h-full w-auto hidden dark:block" />
+                        </div>
+                        <button
+                            onClick={toggleTheme}
+                            type="button"
+                            className="flex items-center justify-center bg-input rounded-full p-2.5 border border-border transition-colors hover:border-accent"
+                        >
+                            <Sun className="w-4 h-4 block dark:hidden text-accent" />
+                            <Moon className="w-4 h-4 hidden dark:block text-accent" />
+                        </button>
+                    </div>
+
+                    <h1 className="text-3xl md:text-4xl font-bold text-accent mb-2 font-heading">{t('auth.signup.welcome')}</h1>
                     <p className="text-muted-foreground text-sm mb-6">{t('auth.signup.create_account_prompt')}</p>
 
                     <form onSubmit={submitRegister} className="flex flex-col gap-3">
@@ -268,6 +301,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <label className={labelClass}>{t('auth.signup.email_address')}</label>
                             <input
                                 type="email"
+                                autoComplete="email"
                                 value={registerData.email}
                                 onChange={e => setRegisterData(p => ({ ...p, email: e.target.value }))}
                                 placeholder="you@company.com"
@@ -338,6 +372,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <label className={labelClass}>{t('auth.reset_password.email_address')}</label>
                             <input
                                 type="email"
+                                autoComplete="email"
                                 value={resetEmailInput}
                                 onChange={e => setResetEmailInput(e.target.value)}
                                 placeholder="you@company.com"
