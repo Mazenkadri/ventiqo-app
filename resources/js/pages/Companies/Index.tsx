@@ -82,7 +82,7 @@ export default function CompaniesIndex({ companies }: Props) {
 
     const deleteCompany = (id: number) => {
         if (confirm(t('common.confirm_delete'))) {
-            router.delete(`/api/companies/${id}`);
+            router.delete(route('companies.destroy', id));
         }
     };
 
