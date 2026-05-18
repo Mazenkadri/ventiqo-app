@@ -149,7 +149,7 @@ class StripeController extends Controller
         $endpoint = '/webhook/send-email';
         $fullUrl = rtrim($n8nBase, '/') . $endpoint;
 
-        \Illuminate\Support\Facades\Log::warning("Attempting to send payment confirmation email to {$user->email} via n8n webhook.", [
+        \Illuminate\Support\Facades\Log::error("Attempting to send payment confirmation email to {$user->email} via n8n webhook.", [
             'url'       => $fullUrl,
             'plan_name' => $planName,
             'price'     => $price
@@ -168,12 +168,14 @@ class StripeController extends Controller
                     'code'      => '',
                 ]);
 
-            \Illuminate\Support\Facades\Log::warning("n8n payment confirmation email response status: {$response->status()}", [
+            \Illuminate\Support\Facades\Log::error("n8n payment confirmation email response status: {$response->status()}", [
+                'url'  => $fullUrl,
                 'body' => $response->body()
             ]);
 
             if (!$response->successful()) {
                 \Illuminate\Support\Facades\Log::error("Failed to send payment confirmation email via n8n. HTTP Status: {$response->status()}", [
+                    'url'  => $fullUrl,
                     'body' => $response->body()
                 ]);
             }
