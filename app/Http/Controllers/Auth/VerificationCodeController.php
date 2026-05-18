@@ -26,13 +26,6 @@ class VerificationCodeController extends Controller
         $endpoint = '/webhook/send-email';
         $fullUrl = rtrim($n8nBase, '/') . $endpoint;
 
-        \Illuminate\Support\Facades\Log::error("Attempting to send verification email to {$user->email} via n8n webhook.", [
-            'url'     => $fullUrl,
-            'subject' => $subject,
-            'type'    => $type,
-            'code'    => $code
-        ]);
-
         try {
             $response = Http::withHeaders([
                     'Content-Type' => 'application/json',
@@ -43,11 +36,6 @@ class VerificationCodeController extends Controller
                     'code'    => $code,
                     'type'    => $type,
                 ]);
-
-            \Illuminate\Support\Facades\Log::error("n8n email response status: {$response->status()}", [
-                'url'  => $fullUrl,
-                'body' => $response->body()
-            ]);
 
             if (!$response->successful()) {
                 \Illuminate\Support\Facades\Log::error("Failed to send email via n8n. HTTP Status: {$response->status()}", [
