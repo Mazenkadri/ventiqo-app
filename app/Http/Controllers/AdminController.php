@@ -142,7 +142,7 @@ class AdminController extends Controller
         $plansPerMonth = BusinessPlan::selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as count')
             ->where('created_at', '>=', now()->subMonths(6))
             ->groupBy('month')
-            ->orderBy('created_at')
+            ->orderByRaw('MIN(created_at)')
             ->get();
 
         // Section success vs failure rate
@@ -155,7 +155,7 @@ class AdminController extends Controller
         $usersPerMonth = User::selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as count')
             ->where('created_at', '>=', now()->subMonths(6))
             ->groupBy('month')
-            ->orderBy('created_at')
+            ->orderByRaw('MIN(created_at)')
             ->get();
 
         // Subscription breakdown
@@ -183,7 +183,7 @@ class AdminController extends Controller
                                         ->where('created_at', '>=', now()->subMonths(6))
                                         ->where('total_tokens', '>', 0)
                                         ->groupBy('month')
-                                        ->orderBy('created_at')
+                                        ->orderByRaw('MIN(created_at)')
                                         ->get(),
                 'tokens_per_section' => PlanSection::selectRaw('section_name, AVG(tokens_total) as avg_tokens')
                                         ->where('tokens_total', '>', 0)

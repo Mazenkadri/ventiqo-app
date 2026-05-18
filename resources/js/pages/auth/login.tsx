@@ -184,6 +184,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             </div>
                             <input
                                 type="password"
+                                autoComplete="current-password"
                                 value={loginData.password}
                                 onChange={e => setLoginData(p => ({ ...p, password: e.target.value }))}
                                 placeholder="••••••••••••••"
@@ -280,6 +281,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <label className={labelClass}>{t('auth.signup.password')}</label>
                             <input
                                 type="password"
+                                autoComplete="new-password"
                                 value={registerData.password}
                                 onChange={e => setRegisterData(p => ({ ...p, password: e.target.value }))}
                                 placeholder="••••••••••••••"
@@ -293,6 +295,7 @@ export default function Login({ status, canResetPassword }: Props) {
                             <label className={labelClass}>{t('auth.signup.confirm_password')}</label>
                             <input
                                 type="password"
+                                autoComplete="new-password"
                                 value={registerData.password_confirmation}
                                 onChange={e => setRegisterData(p => ({ ...p, password_confirmation: e.target.value }))}
                                 placeholder="••••••••••••••"
