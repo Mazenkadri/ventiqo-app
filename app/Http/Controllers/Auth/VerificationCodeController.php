@@ -22,15 +22,43 @@ class VerificationCodeController extends Controller
             ? 'Verify your Ventiqo account'
             : 'Reset your Ventiqo password';
 
-        Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])
-            ->post(config('services.n8n.base_url') . '/webhook/send-email', [
-                'to'      => $user->email,
-                'subject' => $subject,
-                'code'    => $code,
-                'type'    => $type,
+        $n8nBase = config('services.n8n.base_url');
+        $endpoint = '/webhook/send-email';
+        $fullUrl = rtrim($n8nBase, '/') . $endpoint;
+
+        \Illuminate\Support\Facades\Log::info("Attempting to send verification email to {$user->email} via n8n webhook.", [
+            'url'     => $fullUrl,
+            'subject' => $subject,
+            'type'    => $type,
+            'code'    => $code
+        ]);
+
+        try {
+            $response = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($fullUrl, [
+                    'to'      => $user->email,
+                    'subject' => $subject,
+                    'code'    => $code,
+                    'type'    => $type,
+                ]);
+
+            \Illuminate\Support\Facades\Log::info("n8n email response status: {$response->status()}", [
+                'body' => $response->body()
             ]);
+
+            if (!$response->successful()) {
+                \Illuminate\Support\Facades\Log::error("Failed to send email via n8n. HTTP Status: {$response->status()}", [
+                    'body' => $response->body()
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Exception occurred while sending email via n8n.", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
     }
 
     public function sendVerification(Request $request)

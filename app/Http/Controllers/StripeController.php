@@ -145,16 +145,43 @@ class StripeController extends Controller
         $planName = $planType === 'basic' ? 'Basic' : 'Unlimited';
         $price    = $planType === 'basic' ? '$19.99' : '$49.99';
 
-        Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])
-            ->post(config('services.n8n.base_url') . '/webhook/send-email', [
-                'to'        => $user->email,
-                'subject'   => 'Welcome to Ventiqo ' . $planName . '!',
-                'type'      => 'subscription',
-                'plan_name' => $planName,
-                'price'     => $price,
-                'code'      => '',
+        $n8nBase = config('services.n8n.base_url');
+        $endpoint = '/webhook/send-email';
+        $fullUrl = rtrim($n8nBase, '/') . $endpoint;
+
+        \Illuminate\Support\Facades\Log::info("Attempting to send payment confirmation email to {$user->email} via n8n webhook.", [
+            'url'       => $fullUrl,
+            'plan_name' => $planName,
+            'price'     => $price
+        ]);
+
+        try {
+            $response = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($fullUrl, [
+                    'to'        => $user->email,
+                    'subject'   => 'Welcome to Ventiqo ' . $planName . '!',
+                    'type'      => 'subscription',
+                    'plan_name' => $planName,
+                    'price'     => $price,
+                    'code'      => '',
+                ]);
+
+            \Illuminate\Support\Facades\Log::info("n8n payment confirmation email response status: {$response->status()}", [
+                'body' => $response->body()
             ]);
+
+            if (!$response->successful()) {
+                \Illuminate\Support\Facades\Log::error("Failed to send payment confirmation email via n8n. HTTP Status: {$response->status()}", [
+                    'body' => $response->body()
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Exception occurred while sending payment confirmation email via n8n.", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
     }
 }
