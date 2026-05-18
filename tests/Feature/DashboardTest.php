@@ -7,7 +7,15 @@ test('guests are redirected to the login page', function () {
 });
 
 test('authenticated users can visit the dashboard', function () {
-    $this->actingAs($user = User::factory()->create());
+    $user = User::factory()->create();
+    $user->subscription()->create([
+        'status' => 'active',
+        'start_date' => now()->toDateString(),
+        'end_date' => now()->addMonth()->toDateString(),
+        'plan_type' => 'free',
+    ]);
+
+    $this->actingAs($user);
 
     $this->get('/dashboard')->assertOk();
 });

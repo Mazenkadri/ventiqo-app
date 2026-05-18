@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['...']
+nixPkgs = ['php82', 'php82Extensions.pdo', 'php82Extensions.pdo_mysql', 'php82Extensions.mbstring', 'php82Extensions.tokenizer', 'php82Extensions.xml', 'php82Extensions.dom', 'php82Extensions.curl', 'php82Extensions.fileinfo', 'php82Extensions.openssl', 'php82Extensions.ctype', 'php82Extensions.filter', 'php82Extensions.session', 'php82Extensions.gd', 'php82Packages.composer', 'nodejs']
 
 [start]
-cmd = 'php artisan migrate --force && php artisan config:cache && php artisan route:cache && node /assets/scripts/prestart.mjs /assets/nginx.template.conf /nginx.conf && (php-fpm -y /assets/php-fpm.conf & nginx -c /nginx.conf)'
+cmd = 'php artisan migrate --force && php artisan config:cache && php artisan route:cache && node /assets/scripts/prestart.mjs /assets/nginx.template.conf /nginx.conf && (php-fpm -y /assets/php-fpm.conf -d error_log=/dev/stderr &) && nginx -c /nginx.conf -g "pid /tmp/nginx.pid;"'
