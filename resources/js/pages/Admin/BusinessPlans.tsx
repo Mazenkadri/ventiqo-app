@@ -210,7 +210,8 @@ export default function AdminBusinessPlans({ plans }: Props) {
 
                 {/* Table */}
                 <div className="bg-card border border-border rounded-2xl p-6">
-                    <table className="w-full table-auto border-collapse">
+                    {/* Desktop Table View */}
+                    <table className="w-full table-auto border-collapse hidden md:table">
                         <thead>
                             <tr className="border-b border-border text-left text-sm text-muted-foreground">
                                 <th className="pb-3 font-medium">{t('admin.business_plans.table.title')}</th>
@@ -280,6 +281,81 @@ export default function AdminBusinessPlans({ plans }: Props) {
                             ))}
                         </tbody>
                     </table>
+
+                    {/* Mobile Cards View */}
+                    <div className="grid grid-cols-1 gap-4 md:hidden">
+                        {filteredPlans.length === 0 ? (
+                            <p className="text-center text-muted-foreground text-sm py-6">
+                                {t('admin.business_plans.table.no_plans')}
+                            </p>
+                        ) : (
+                            filteredPlans.map(plan => (
+                                <div key={plan.id} className="bg-card border border-border/50 rounded-xl p-5 flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <h3 className="font-semibold font-heading text-base text-foreground">{plan.title}</h3>
+                                            <p className="text-xs text-muted-foreground mt-0.5">{plan.project?.company?.name ?? '—'}</p>
+                                        </div>
+                                        <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-accent/10 text-accent border border-accent/20 capitalize">
+                                            {plan.language}
+                                        </span>
+                                    </div>
+
+                                    <div className="text-xs text-muted-foreground bg-input/50 p-2.5 rounded-lg border border-border/30 flex flex-col gap-1.5">
+                                        <div className="flex justify-between">
+                                            <span>{t('admin.business_plans.table.owner')}</span>
+                                            <span className="font-medium text-foreground text-right">
+                                                {plan.project?.company?.user?.name ?? '—'}
+                                                <span className="block text-[10px] text-muted-foreground/60 font-normal">{plan.project?.company?.user?.email ?? ''}</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between mt-1 pt-1.5 border-t border-border/20">
+                                            <span>{t('admin.business_plans.table.date')}</span>
+                                            <span className="font-medium text-foreground">{new Date(plan.created_at).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Sections progress bar/badges */}
+                                    <div className="flex flex-col gap-1.5">
+                                        <span className="text-[11px] font-medium text-muted-foreground">{t('admin.business_plans.table.sections')}</span>
+                                        <div className="flex gap-1 flex-wrap">
+                                            {SECTION_ORDER.map(section => {
+                                                const status = getSectionStatus(plan.plan_sections, section);
+                                                return (
+                                                    <span
+                                                        key={section}
+                                                        title={section}
+                                                        className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                                                            status === 'completed'
+                                                                ? 'bg-primary/20 text-primary'
+                                                                : status === 'failed'
+                                                                ? 'bg-destructive/20 text-destructive'
+                                                                : status === 'pending'
+                                                                ? 'bg-warning/20 text-warning'
+                                                                : 'bg-border text-muted-foreground'
+                                                        }`}
+                                                    >
+                                                        {LABELS[section]}
+                                                    </span>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-2 justify-end mt-2 pt-3 border-t border-border/50">
+                                        <button
+                                            onClick={() => setViewingPlan(plan)}
+                                            type="button"
+                                            className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-lg border border-border hover:bg-accent/10 transition-colors w-full justify-center"
+                                        >
+                                            <Eye className="w-3.5 h-3.5" />
+                                            {t('admin.business_plans.table.view')}
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
                 </div>
 
                 {/* View Plan Overlay */}
