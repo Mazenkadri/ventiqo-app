@@ -277,9 +277,9 @@
         "continue_plan": "Continue",
         "regenerate": "Regenerate",
         "view_plan": "View Plan",
-        "plan_complete": "Plan Complete",
-        "plan_in_progress": "In Progress",
-        "no_plan": "No Plan",
+        "plan_complete": "Plan-Complete",
+        "plan_in_progress": "In-Progress",
+        "no_plan": "No-Plan",
         "generate_plan": "Generate Plan"
     },
     "support": {
@@ -510,7 +510,7 @@
             "references": "Any reports or data sources you used? e.g. World Bank SME report 2023, Statista MENA data",
             "cvs_attached": "Are team CVs included? ",
             "market_links": "Any useful links about your market? e.g. https://statista.com/mena-saas-2024"
-            },
+        },
         "all_sections_complete": "All sections generated successfully!",
         "view_result": "View Business Plan",
         "full_plan": "Full Business Plan",
@@ -521,7 +521,6 @@
         "waiting_for_deps": "Waiting for previous section to complete...",
         "section_generating": "This section is being generated in the background..."
     },
-
     "bmc": {
         "key_partners": "Key Partners",
         "key_activities": "Key Activities",

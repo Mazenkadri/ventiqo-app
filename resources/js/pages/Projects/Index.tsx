@@ -228,28 +228,55 @@ export default function ProjectsIndex({ companies }: Props) {
                     {allProjects.length === 0 ? (
                         <p className="text-muted-foreground text-sm">{t('projects.no_projects')}</p>
                     ) : (
-                        <table className="w-full table-auto border-collapse">
-                            <thead>
-                                <tr className="border-b border-border text-left text-sm text-muted-foreground">
-                                    <th className="pb-3 font-medium">{t('projects.project_name')}</th>
-                                    <th className="pb-3 font-medium">{t('projects.company')}</th>
-                                    <th className="pb-3 font-medium">{t('projects.start_date')}</th>
-                                    <th className="pb-3 font-medium">{t('projects.status')}</th>
-                                    <th className="pb-3 font-medium"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {allProjects.map(project => (
-                                    <tr key={project.id} className="border-b border-border/50 text-sm">
-                                        <td className="py-4 font-medium">{project.name}</td>
-                                        <td className="py-4 text-muted-foreground">{project.company_name}</td>
-                                        <td className="py-4 text-muted-foreground">{project.start_date}</td>
-                                        <td className="py-4">{getStatusBadge(project)}</td>
-                                        <td className="py-4">{renderActions(project)}</td>
+                        <>
+                            {/* Desktop Table View */}
+                            <table className="w-full table-auto border-collapse hidden md:table">
+                                <thead>
+                                    <tr className="border-b border-border text-left text-sm text-muted-foreground">
+                                        <th className="pb-3 font-medium">{t('projects.project_name')}</th>
+                                        <th className="pb-3 font-medium">{t('projects.company')}</th>
+                                        <th className="pb-3 font-medium">{t('projects.start_date')}</th>
+                                        <th className="pb-3 font-medium">{t('projects.status')}</th>
+                                        <th className="pb-3 font-medium"></th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {allProjects.map(project => (
+                                        <tr key={project.id} className="border-b border-border/50 text-sm">
+                                            <td className="py-4 font-medium">{project.name}</td>
+                                            <td className="py-4 text-muted-foreground">{project.company_name}</td>
+                                            <td className="py-4 text-muted-foreground">{project.start_date}</td>
+                                            <td className="py-4">{getStatusBadge(project)}</td>
+                                            <td className="py-4">{renderActions(project)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            {/* Mobile Cards View */}
+                            <div className="grid grid-cols-1 gap-4 md:hidden">
+                                {allProjects.map(project => (
+                                    <div key={project.id} className="bg-card border border-border/50 rounded-xl p-5 flex flex-col gap-3">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="font-semibold font-heading text-base text-foreground">{project.name}</h3>
+                                                <p className="text-xs text-muted-foreground mt-0.5">{project.company_name}</p>
+                                            </div>
+                                            {getStatusBadge(project)}
+                                        </div>
+                                        
+                                        <div className="text-xs text-muted-foreground bg-input/50 p-2.5 rounded-lg border border-border/30 flex justify-between">
+                                            <span>{t('projects.start_date')}</span>
+                                            <span className="font-medium text-foreground">{project.start_date}</span>
+                                        </div>
+                                        
+                                        <div className="flex gap-2 justify-end mt-2 pt-3 border-t border-border/50">
+                                            {renderActions(project)}
+                                        </div>
+                                    </div>
                                 ))}
-                            </tbody>
-                        </table>
+                            </div>
+                        </>
                     )}
                 </div>
 

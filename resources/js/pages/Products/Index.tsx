@@ -102,43 +102,88 @@ export default function ProductsIndex({ companies }: Props) {
                 </div>
                 <div className="bg-card border border-border rounded-2xl p-6">
                     {allProducts.length === 0 ? (
-                        <p>{t('products.no_products')}</p>
+                        <p className="text-muted-foreground text-sm">{t('products.no_products')}</p>
                     ) : (
-                        <table className="w-full table-auto border-collapse">
-                            <thead>
-                                <tr className='border-b border-border text-left text-sm text-muted-foreground'>
-                                    <th className="pb-3 font-medium">{t('products.product_name')}</th>
-                                    <th className="pb-3 font-medium">{t('products.company')}</th>
-                                    <th className="pb-3 font-medium">{t('products.description')}</th>
-                                    <th className="pb-3 font-medium">{t('products.price')}</th>
-                                    <th className="pb-3 font-medium"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <>
+                            {/* Desktop Table View */}
+                            <table className="w-full table-auto border-collapse hidden md:table">
+                                <thead>
+                                    <tr className='border-b border-border text-left text-sm text-muted-foreground'>
+                                        <th className="pb-3 font-medium">{t('products.product_name')}</th>
+                                        <th className="pb-3 font-medium">{t('products.company')}</th>
+                                        <th className="pb-3 font-medium">{t('products.description')}</th>
+                                        <th className="pb-3 font-medium">{t('products.price')}</th>
+                                        <th className="pb-3 font-medium"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {allProducts.map(product => (
+                                        <tr key={product.id} className="border-b border-border/50 text-sm">
+                                            <td className="py-4 font-medium">{product.name}</td>
+                                            <td className="py-4 text-muted-foreground">{product.company_name}</td>
+                                            <td className="py-4 text-muted-foreground max-w-[200px] truncate">{product.description || '—'}</td>
+                                            <td className="py-4">${product.price}</td>
+                                            <td className="py-4 flex gap-2">
+                                                <button
+                                                    onClick={() => openEdit(product)}
+                                                    className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-accent/10 transition-colors">
+                                                    <Pencil className="w-3 h-3" />
+                                                    {t('common.edit')}
+                                                </button>
+                                                <button
+                                                    onClick={() => deleteProduct(product.id)}
+                                                    className="flex items-center gap-1 bg-red text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-red/10 text-destructive hover:bg-destructive/10 transition-colors">
+                                                    <Trash2 className="w-3 h-3" />
+                                                    {t('common.delete')}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            {/* Mobile Cards View */}
+                            <div className="grid grid-cols-1 gap-4 md:hidden">
                                 {allProducts.map(product => (
-                                    <tr key={product.id} className="border-b border-border/50 text-sm">
-                                        <td className="py-4 font-medium">{product.name}</td>
-                                        <td className="py-4 text-muted-foreground">{product.company_name}</td>
-                                        <td className="py-4 text-muted-foreground max-w-[200px] truncate">{product.description || '—'}</td>
-                                        <td className="py-4">${product.price}</td>
-                                        <td className="py-4 flex gap-2">
+                                    <div key={product.id} className="bg-card border border-border/50 rounded-xl p-5 flex flex-col gap-3">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="font-semibold font-heading text-base text-foreground">{product.name}</h3>
+                                                <p className="text-xs text-muted-foreground mt-0.5">{product.company_name}</p>
+                                            </div>
+                                            <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-accent/10 text-accent border border-accent/20">
+                                                ${product.price}
+                                            </span>
+                                        </div>
+                                        
+                                        {product.description && (
+                                            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 bg-input/50 p-2.5 rounded-lg border border-border/30">
+                                                {product.description}
+                                            </p>
+                                        )}
+                                        
+                                        <div className="flex gap-2 justify-end mt-2 pt-3 border-t border-border/50">
                                             <button
                                                 onClick={() => openEdit(product)}
-                                                className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-accent/10 transition-colors">
-                                                <Pencil className="w-3 h-3" />
+                                                type="button"
+                                                className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-lg border border-border hover:bg-accent/10 transition-colors"
+                                            >
+                                                <Pencil className="w-3.5 h-3.5" />
                                                 {t('common.edit')}
                                             </button>
                                             <button
                                                 onClick={() => deleteProduct(product.id)}
-                                                className="flex items-center gap-1 bg-red text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-red/10 text-destructive hover:bg-destructive/10 transition-colors">
-                                                <Trash2 className="w-3 h-3" />
+                                                type="button"
+                                                className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-lg border border-destructive/20 text-destructive hover:bg-destructive/10 transition-colors"
+                                            >
+                                                <Trash2 className="w-3.5 h-3.5" />
                                                 {t('common.delete')}
                                             </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 ))}
-                            </tbody>
-                        </table>
+                            </div>
+                        </>
                     )}
                     {showForm && (
                         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">

@@ -277,9 +277,9 @@
         "continue_plan": "Continuer",
         "regenerate": "Régénérer",
         "view_plan": "Voir le plan",
-        "plan_complete": "Plan Complet",
-        "plan_in_progress": "En Cours",
-        "no_plan": "Pas de Plan",
+        "plan_complete": "Plan-Complet",
+        "plan_in_progress": "En-Cours",
+        "no_plan": "Pas-de-Plan",
         "generate_plan": "Générer le Plan"
     },
     "support": {
