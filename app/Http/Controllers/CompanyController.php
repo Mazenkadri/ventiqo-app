@@ -70,10 +70,10 @@ class CompanyController extends Controller
     public function destroy(Request $request, $id){
         $company = Company::find($id);
         if (!$company || $company->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return back()->withErrors(['delete' => 'Unauthorized']);
         }
         if ($company->projects()->count()>0){
-            return response()->json(['message' => 'Cannot delete company with active projects'], 422);
+            return back()->withErrors(['delete' => 'active_projects']);
         }
         $company->delete();
         return redirect()->route('companies');

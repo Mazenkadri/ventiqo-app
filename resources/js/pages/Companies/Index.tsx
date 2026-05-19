@@ -1,6 +1,6 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { Building2, Mail, Pencil, Plus, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Building2, Mail, Pencil, Plus, Trash2, AlertTriangle, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -26,6 +26,18 @@ export default function CompaniesIndex({ companies }: Props) {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
     const [editingCompany, setEditingCompany] = useState<Company | null>(null);
+    const { errors: pageErrors } = usePage().props;
+    const [dismissedError, setDismissedError] = useState(false);
+
+    useEffect(() => {
+        setDismissedError(false);
+    }, [pageErrors]);
+
+    const errorMessage = pageErrors.delete
+        ? (pageErrors.delete === 'active_projects'
+            ? t('companies.delete_error_active_projects')
+            : (typeof pageErrors.delete === 'string' ? pageErrors.delete : String(pageErrors.delete)))
+        : null;
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: t('nav.dashboard'), href: '/dashboard' },
@@ -90,6 +102,22 @@ export default function CompaniesIndex({ companies }: Props) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t('companies.title')} />
             <div className="p-6">
+                {/* Alert for errors */}
+                {errorMessage && !dismissedError && (
+                    <div className="mb-6 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="flex items-center gap-2">
+                            <AlertTriangle className="w-5 h-5 shrink-0" />
+                            <span>{errorMessage}</span>
+                        </div>
+                        <button 
+                            onClick={() => setDismissedError(true)} 
+                            className="p-1 hover:bg-destructive/15 rounded-lg transition-colors cursor-pointer"
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+                    </div>
+                )}
+
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-3xl font-bold font-heading">

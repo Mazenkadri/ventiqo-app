@@ -232,7 +232,8 @@
         "edit": "Modifier",
         "delete": "Supprimer",
         "edit_company": "Modifier l'Entreprise",
-        "no_companies": "Aucune entreprise. Créez la première."
+        "no_companies": "Aucune entreprise. Créez la première.",
+        "delete_error_active_projects": "Impossible de supprimer une entreprise ayant des projets actifs."
     },
     "common": {
         "save": "Enregistrer",

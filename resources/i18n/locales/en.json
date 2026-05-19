@@ -232,7 +232,8 @@
         "edit": "Edit",
         "delete": "Delete",
         "edit_company": "Edit Company",
-        "no_companies": "No companies yet. Create your first one."
+        "no_companies": "No companies yet. Create your first one.",
+        "delete_error_active_projects": "Cannot delete company with active projects."
     },
     "common": {
         "save": "Save",
