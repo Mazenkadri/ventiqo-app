@@ -449,10 +449,8 @@
             "mitigation_plans": "Mitigation Plans",
             "opportunities": "Opportunities",
             "contingency": "Contingency Plan",
-            "appendix_docs": "Supporting Documents",
-            "references": "References",
-            "cvs_attached": "CVs Attached",
-            "market_links": "Market Links"
+            "selected_documents": "Select Documents to Include",
+            "custom_references": "Additional Documents & Links"
         },
         "placeholders": {
             "company_name": "What is your company called?",
@@ -507,10 +505,14 @@
             "mitigation_plans": "How will you handle those risks? e.g. Cross-train the team and keep 3 months of cash in reserve",
             "opportunities": "What opportunities could help you grow faster? e.g. Government grants for digital transformation projects",
             "contingency": "What is your backup plan if things don't go as planned? e.g. Offer consulting services to generate revenue while we adjust",
-            "appendix_docs": "What supporting documents are you including? e.g. Financial spreadsheet, product demo screenshots",
-            "references": "Any reports or data sources you used? e.g. World Bank SME report 2023, Statista MENA data",
-            "cvs_attached": "Are team CVs included? ",
-            "market_links": "Any useful links about your market? e.g. https://statista.com/mena-saas-2024"
+            "custom_references": "List any additional documents or links you plan to attach... e.g. World Bank SME report 2023, product demo screenshots"
+        },
+        "appendix_suggestions": {
+            "financial_projections": "3-Year Financial Projections",
+            "founder_cvs": "Founder CVs",
+            "market_research": "Market Research Report",
+            "legal_certificates": "Business Registration / Legal Certificates",
+            "pitch_deck": "Pitch Deck Presentation"
         },
         "all_sections_complete": "All sections generated successfully!",
         "view_result": "View Business Plan",

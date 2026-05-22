@@ -95,7 +95,7 @@ const SECTION_DEFS: {
     {
         key: 'appendices',
         deps: ['company_presentation', 'financial_plan', 'risk_opportunity'],
-        fields: ['appendix_docs', 'references', 'cvs_attached', 'market_links'],
+        fields: ['selected_documents', 'custom_references'],
         required: [],
     },
     {
@@ -521,6 +521,33 @@ export default function BusinessPlanShow({ project, business_plan, sections, pro
                                                             placeholder={t('bp.product_description_placeholder')}
                                                             className="bg-input border border-[var(--input-border)] rounded-xl px-3 py-2 text-sm outline-none focus:border-accent transition-colors resize-none"
                                                         />
+                                                    </div>
+                                                ) : field === 'selected_documents' && currentDef.key === 'appendices' ? (
+                                                    <div className="flex flex-col gap-3 mt-2">
+                                                        {['financial_projections', 'founder_cvs', 'market_research', 'legal_certificates', 'pitch_deck'].map(docKey => {
+                                                            const currentVal = sectionData[currentDef.key]?.['selected_documents'] 
+                                                                ?? localSections[currentDef.key]?.input_json?.['selected_documents'] 
+                                                                ?? '';
+                                                            const selectedArray = currentVal ? String(currentVal).split(',') : [];
+                                                            const isChecked = selectedArray.includes(docKey);
+
+                                                            const toggleDoc = () => {
+                                                                if (isChecked) {
+                                                                    handleFieldChange(currentDef.key, 'selected_documents', selectedArray.filter(d => d !== docKey).join(','));
+                                                                } else {
+                                                                    handleFieldChange(currentDef.key, 'selected_documents', [...selectedArray, docKey].join(','));
+                                                                }
+                                                            };
+
+                                                            return (
+                                                                <div key={docKey} onClick={toggleDoc} className="flex items-center gap-3 cursor-pointer group">
+                                                                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${isChecked ? 'bg-accent border-accent' : 'border-[var(--input-border)] group-hover:border-accent/50'}`}>
+                                                                        {isChecked && <Check className="w-3.5 h-3.5 text-black" />}
+                                                                    </div>
+                                                                    <span className="text-sm">{t(`bp.appendix_suggestions.${docKey}`)}</span>
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
                                                 ) : (
                                                     <textarea

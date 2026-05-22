@@ -449,10 +449,8 @@
             "mitigation_plans": "Plans de Mitigation",
             "opportunities": "Opportunités",
             "contingency": "Plan de Contingence",
-            "appendix_docs": "Documents Annexes",
-            "references": "Références",
-            "cvs_attached": "CVs Joints",
-            "market_links": "Liens Marché"
+            "selected_documents": "Sélectionner les documents à inclure",
+            "custom_references": "Documents et liens supplémentaires"
         },
         "placeholders": {
             "company_name": "Comment s'appelle votre entreprise ?",
@@ -507,10 +505,14 @@
             "mitigation_plans": "Comment gérerez-vous ces risques ? ex : Former l'équipe sur plusieurs postes et garder 3 mois de trésorerie en réserve",
             "opportunities": "Quelles opportunités pourraient accélérer votre croissance ? ex : Subventions gouvernementales pour la transformation numérique",
             "contingency": "Quel est votre plan B si les choses ne se passent pas comme prévu ? ex : Proposer des services de conseil pour générer des revenus pendant l'ajustement",
-            "appendix_docs": "Quels documents justificatifs incluez-vous ? ex : Tableur financier, captures d'écran de démonstration du produit",
-            "references": "Des rapports ou sources de données utilisés ? ex : Rapport PME Banque Mondiale 2023, données Statista MENA",
-            "cvs_attached": "Les CV de l'équipe sont-ils inclus ?",
-            "market_links": "Des liens utiles sur votre marché ? ex : https://statista.com/mena-saas-2024"
+            "custom_references": "Listez tout document ou lien supplémentaire que vous prévoyez de joindre... ex: Rapport de la Banque Mondiale, captures d'écran de produit"
+        },
+        "appendix_suggestions": {
+            "financial_projections": "Projections financières sur 3 ans",
+            "founder_cvs": "CV des fondateurs",
+            "market_research": "Rapport d'étude de marché",
+            "legal_certificates": "Certificats d'enregistrement / statuts",
+            "pitch_deck": "Présentation Pitch Deck"
         },
         "all_sections_complete": "Toutes les sections ont été générées avec succès!",
         "view_result": "Voir le Business Plan",
